@@ -51,9 +51,16 @@ class MovieListProcessorTest {
 
     @Test
     fun `given GoToDetailAction, when calls 'actionProcessor', then return NavigateToResult-GoToDetail`() = runBlocking {
-        val results = processor.actionProcessor(GoToDetailAction(2)).toList()
+        val results = processor.actionProcessor(
+            GoToDetailAction(
+                DomainMovie("","","","","","")
+            )
+        ).toList()
 
-        assertEquals(results[0], NavigateToResult.GoToDetail(2))
+        assertEquals(results[0], NavigateToResult.GoToDetail(
+                DomainMovie("","","","","","")
+            )
+        )
     }
 
     private fun stubGetCharacterListUseCase(domainMovieList: DomainMovieList) {

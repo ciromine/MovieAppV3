@@ -1,5 +1,6 @@
 package com.example.ciromine.movieappv3.presentation.movielist
 
+import com.example.ciromine.movieappv3.domain.model.DomainMovie
 import com.example.ciromine.movieappv3.presentation.movielist.MovieListResult.*
 import com.example.ciromine.movieappv3.presentation.movielist.MovieListUiState.*
 import org.junit.Test
@@ -28,19 +29,11 @@ class MovieListReducerTest {
     }
 
     @Test
-    fun `given LoadingUiState with GetCharacterListResult-Error, when reduce, then return ErrorUiState`() {
-        val previousState = LoadingUiState
-        val result = GetMovieListResult.Error
-
-        val newState = with(sutReducer) { previousState reduce result }
-
-        assert(newState is ErrorUiState)
-    }
-
-    @Test
     fun `given SuccessUiState with NavigateToResult-GoToDetail, when reduce, then return SuccessUiState`() {
         val previousState = SuccessUiState(listOf())
-        val result = NavigateToResult.GoToDetail(2)
+        val result = NavigateToResult.GoToDetail(
+            DomainMovie("","","","","","")
+        )
 
         val newState = with(sutReducer) { previousState reduce result }
 
