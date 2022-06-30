@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/movieListFragment"
         android:name="com.example.ciromine.movieappv3.ui.movielist.MovieListFragment"
-        android:label="fragment_slash"
+        android:label="@string/tv_title_movie_list"
         tools:layout="@layout/fragment_movie_list">
         <action
             android:id="@+id/action_slashFragment_to_characterListFragment"
@@ -20,11 +20,11 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.ciromine.movieappv3.ui.detail.DetailFragment"
-        android:label="fragment_slash"
+        android:label="@string/tv_title_movie_detail_list"
         tools:layout="@layout/fragment_movie_list">
         <argument
-            android:name="id"
-            app:argType="integer" />
+            android:name="domainMovie"
+            app:argType="com.example.ciromine.movieappv3.domain.model.DomainMovie" />
     </fragment>
 
 </navigation>

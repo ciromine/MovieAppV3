@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ciromine.movieappv3.core.mvi.MviPresentation
 import com.example.ciromine.movieappv3.core.mvi.MviPresentationEffect
+import com.example.ciromine.movieappv3.presentation.movielist.MovieListAction.*
+import com.example.ciromine.movieappv3.presentation.movielist.MovieListResult.*
+import com.example.ciromine.movieappv3.presentation.movielist.MovieListUIntent.*
+import com.example.ciromine.movieappv3.presentation.movielist.MovieListUiEffect.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -42,16 +46,16 @@ class MovieListViewModel @Inject constructor(
 
     private fun MovieListUIntent.toAction(): MovieListAction {
         return when (this) {
-            MovieListUIntent.InitialUIntent, MovieListUIntent.RetrySeeCharacterListUIntent -> MovieListAction.GetMovieListAction
-            is MovieListUIntent.SeeDetailUIntent -> MovieListAction.GoToDetailAction(id)
+            InitialUIntent, RetrySeeCharacterListUIntent -> GetMovieListAction
+            is SeeDetailUIntent -> GoToDetailAction(domainMovie)
         }
     }
 
     private fun Flow<MovieListResult>.handleEffect(): Flow<MovieListResult> {
         return onEach { change ->
             val event = when (change) {
-                is MovieListResult.NavigateToResult.GoToDetail -> MovieListUiEffect.NavigateToCharacterDetailUiEffect(
-                    change.id
+                is NavigateToResult.GoToDetail -> NavigateToCharacterDetailUiEffect(
+                    change.domainMovie
                 )
                 else -> return@onEach
             }

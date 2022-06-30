@@ -12,5 +12,7 @@
 
     <string name="error_get_movie_list">Error al obtener lista de peliculas</string>
     <string name="tv_movie_title_label">Listado de peliculas de Marvel</string>
+    <string name="tv_title_movie_list">Listado de peliculas</string>
+    <string name="tv_title_movie_detail_list">Detalle de pelicula</string>
     <string name="tv_date_label">Fecha de estreno: %1$s</string>
 </resources>

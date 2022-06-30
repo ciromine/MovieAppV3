@@ -1,6 +1,7 @@
 package com.example.ciromine.movieappv3.presentation.movielist
 
 import com.example.ciromine.movieappv3.core.mvi.events.MviUserIntent
+import com.example.ciromine.movieappv3.domain.model.DomainMovie
 
 sealed class MovieListUIntent : MviUserIntent {
 
@@ -8,5 +9,5 @@ sealed class MovieListUIntent : MviUserIntent {
 
     object RetrySeeCharacterListUIntent : MovieListUIntent()
 
-    data class SeeDetailUIntent(val id: Int) : MovieListUIntent()
+    data class SeeDetailUIntent(val domainMovie: DomainMovie) : MovieListUIntent()
 }

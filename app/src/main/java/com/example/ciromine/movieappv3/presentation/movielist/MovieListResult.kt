@@ -12,6 +12,6 @@ sealed class MovieListResult : MviResult {
     }
 
     sealed class NavigateToResult : MovieListResult() {
-        data class GoToDetail(val id: Int) : NavigateToResult()
+        data class GoToDetail(val domainMovie: DomainMovie) : NavigateToResult()
     }
 }

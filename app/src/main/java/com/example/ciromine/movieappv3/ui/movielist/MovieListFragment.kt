@@ -96,7 +96,7 @@ class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
 
             is MovieListUiState.SuccessUiState -> {
                 hideLoading()
-                showMovie(uiState.movies)
+                showMovieList(uiState.movies)
             }
 
             MovieListUiState.ErrorUiState -> {
@@ -126,7 +126,7 @@ class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
         }
     }
 
-    private fun showMovie(movies: List<DomainMovie>) {
+    private fun showMovieList(movies: List<DomainMovie>) {
         val adapter = MovieListAdapter(movies) {
             onItemCharacterTapped(it)
         }
@@ -138,19 +138,19 @@ class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
 
     override fun handleEffect(uiEffect: MovieListUiEffect) {
         when (uiEffect) {
-            is MovieListUiEffect.NavigateToCharacterDetailUiEffect -> goToCharacterEdit(uiEffect.id)
+            is MovieListUiEffect.NavigateToCharacterDetailUiEffect -> goToCharacterEdit(uiEffect.domainMovie)
         }
     }
 
-    private fun onItemCharacterTapped(id: Int) {
+    private fun onItemCharacterTapped(domainMovie: DomainMovie) {
         viewLifecycleOwner.lifecycleScope.launch {
-            userIntents.emit(SeeDetailUIntent(id))
+            userIntents.emit(SeeDetailUIntent(domainMovie))
         }
     }
 
-    private fun goToCharacterEdit(id: Int) {
+    private fun goToCharacterEdit(domainMovie: DomainMovie) {
         binding?.let {
-            navigator.goToMovieDetail(it.root, id)
+            navigator.goToMovieDetail(it.root, domainMovie)
         }
     }
 
