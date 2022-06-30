@@ -4,5 +4,5 @@ import com.example.ciromine.movieappv3.domain.model.DomainMovieList
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    fun getCharacterList(): Flow<DomainMovieList>
+    fun getMovieList(): Flow<DomainMovieList>
 }

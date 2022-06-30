@@ -5,7 +5,7 @@ import com.example.ciromine.movieappv3.domain.model.DomainMovie
 
 sealed class MovieListResult : MviResult {
 
-    sealed class GetResult : MovieListResult() {
+    sealed class GetMovieListResult : MovieListResult() {
         object InProgress : MovieListResult()
         data class Success(val results: List<DomainMovie>) : MovieListResult()
         object Error : MovieListResult()

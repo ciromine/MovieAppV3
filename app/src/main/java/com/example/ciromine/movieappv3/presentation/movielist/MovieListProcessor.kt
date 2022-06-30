@@ -12,18 +12,18 @@ class MovieListProcessor @Inject constructor(
 
     fun actionProcessor(actions: MovieListAction): Flow<MovieListResult> =
         when (actions) {
-            is MovieListAction.GetMainAction -> getMovieListActionProcessor()
+            is MovieListAction.GetMovieListAction -> getMovieListActionProcessor()
             is MovieListAction.GoToDetailAction -> goToDetailActionProcessor(actions.id)
         }
 
     private fun getMovieListActionProcessor(): Flow<MovieListResult> =
         useCase.execute()
             .map {
-                MovieListResult.GetResult.Success(it.results) as MovieListResult
+                MovieListResult.GetMovieListResult.Success(it.results) as MovieListResult
             }.onStart {
-                emit(MovieListResult.GetResult.InProgress)
+                emit(MovieListResult.GetMovieListResult.InProgress)
             }.catch {
-                emit(MovieListResult.GetResult.Error)
+                emit(MovieListResult.GetMovieListResult.Error)
             }
             .flowOn(coroutineThreadProvider.ioThread())
 

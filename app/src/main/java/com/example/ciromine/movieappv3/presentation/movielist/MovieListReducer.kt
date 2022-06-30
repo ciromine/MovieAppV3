@@ -19,14 +19,14 @@ class MovieListReducer @Inject constructor() :
 
     private infix fun MovieListUiState.DefaultUiState.reduce(result: MovieListResult): MovieListUiState {
         return when (result) {
-            MovieListResult.GetResult.InProgress -> MovieListUiState.LoadingUiState
+            MovieListResult.GetMovieListResult.InProgress -> MovieListUiState.LoadingUiState
             else -> throw UnsupportedReduceException(this, result)
         }
     }
 
     private infix fun MovieListUiState.LoadingUiState.reduce(result: MovieListResult): MovieListUiState {
         return when (result) {
-            is MovieListResult.GetResult.Success -> MovieListUiState.SuccessUiState(result.results)
+            is MovieListResult.GetMovieListResult.Success -> MovieListUiState.SuccessUiState(result.results)
             is Error -> MovieListUiState.ErrorUiState
             else -> throw UnsupportedReduceException(this, result)
         }
@@ -41,7 +41,7 @@ class MovieListReducer @Inject constructor() :
 
     private infix fun MovieListUiState.ErrorUiState.reduce(result: MovieListResult): MovieListUiState {
         return when (result) {
-            MovieListResult.GetResult.InProgress -> MovieListUiState.LoadingUiState
+            MovieListResult.GetMovieListResult.InProgress -> MovieListUiState.LoadingUiState
             else -> throw UnsupportedReduceException(this, result)
         }
     }

@@ -8,5 +8,5 @@ import javax.inject.Inject
 class GetMovieListUseCase
 @Inject
 constructor(private val repository: MovieRepository) {
-    fun execute(): Flow<DomainMovieList> = repository.getCharacterList()
+    fun execute(): Flow<DomainMovieList> = repository.getMovieList()
 }

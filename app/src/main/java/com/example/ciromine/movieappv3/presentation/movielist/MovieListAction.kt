@@ -4,7 +4,7 @@ import com.example.ciromine.movieappv3.core.mvi.events.MviAction
 
 sealed class MovieListAction : MviAction {
 
-    object GetMainAction : MovieListAction()
+    object GetMovieListAction : MovieListAction()
 
     data class GoToDetailAction(val id: Int) : MovieListAction()
 }

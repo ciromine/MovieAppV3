@@ -13,16 +13,23 @@ import com.example.ciromine.movieappv3.core.mvi.MviUiEffect
 import com.example.ciromine.movieappv3.databinding.FragmentMovieListBinding
 import com.example.ciromine.movieappv3.domain.model.DomainMovie
 import com.example.ciromine.movieappv3.presentation.movielist.MovieListUIntent
+import com.example.ciromine.movieappv3.presentation.movielist.MovieListUIntent.*
 import com.example.ciromine.movieappv3.presentation.movielist.MovieListUiEffect
 import com.example.ciromine.movieappv3.presentation.movielist.MovieListUiState
 import com.example.ciromine.movieappv3.presentation.movielist.MovieListViewModel
 import com.example.ciromine.movieappv3.ui.movielist.adapter.MovieListAdapter
 import com.google.android.material.snackbar.Snackbar
 import com.example.ciromine.movieappv3.ui.navigator.Navigator
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@FlowPreview
+@AndroidEntryPoint
 class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
     MviUiEffect<MovieListUiEffect> {
 
@@ -64,7 +71,7 @@ class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
     }
 
     private fun initialUserIntent(): Flow<MovieListUIntent> = flow {
-        emit(MovieListUIntent.InitialUIntent)
+        emit(InitialUIntent)
     }
 
     private fun setupListener() {
@@ -89,7 +96,7 @@ class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
 
             is MovieListUiState.SuccessUiState -> {
                 hideLoading()
-                showMovie(uiState.characters)
+                showMovie(uiState.movies)
             }
 
             MovieListUiState.ErrorUiState -> {
@@ -119,8 +126,8 @@ class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
         }
     }
 
-    private fun showMovie(characters: List<DomainMovie>) {
-        val adapter = MovieListAdapter(characters) {
+    private fun showMovie(movies: List<DomainMovie>) {
+        val adapter = MovieListAdapter(movies) {
             onItemCharacterTapped(it)
         }
         binding?.apply {
@@ -137,7 +144,7 @@ class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
 
     private fun onItemCharacterTapped(id: Int) {
         viewLifecycleOwner.lifecycleScope.launch {
-            //userIntents.emit(SeeDetailUIntent(id))
+            userIntents.emit(SeeDetailUIntent(id))
         }
     }
 

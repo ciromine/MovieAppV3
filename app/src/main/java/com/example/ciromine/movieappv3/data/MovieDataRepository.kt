@@ -13,10 +13,10 @@ class MovieDataRepository @Inject constructor(
     private val mapper: DataResponseMapper
 ) : MovieRepository {
 
-    override fun getCharacterList(): Flow<DomainMovieList> = flow {
-        val characterList = with(mapper) {
+    override fun getMovieList(): Flow<DomainMovieList> = flow {
+        val movieList = with(mapper) {
             remote.getMovieList().toDomain()
         }
-        emit(characterList)
+        emit(movieList)
     }
 }

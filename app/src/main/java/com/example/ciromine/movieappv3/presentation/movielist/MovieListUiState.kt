@@ -6,6 +6,6 @@ import com.example.ciromine.movieappv3.domain.model.DomainMovie
 sealed class MovieListUiState : MviUiState {
     object DefaultUiState : MovieListUiState()
     object LoadingUiState : MovieListUiState()
-    data class SuccessUiState(val characters: List<DomainMovie>) : MovieListUiState()
+    data class SuccessUiState(val movies: List<DomainMovie>) : MovieListUiState()
     object ErrorUiState : MovieListUiState()
 }

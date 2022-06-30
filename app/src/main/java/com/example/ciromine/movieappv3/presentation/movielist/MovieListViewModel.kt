@@ -42,7 +42,7 @@ class MovieListViewModel @Inject constructor(
 
     private fun MovieListUIntent.toAction(): MovieListAction {
         return when (this) {
-            MovieListUIntent.InitialUIntent, MovieListUIntent.RetrySeeCharacterListUIntent -> MovieListAction.GetMainAction
+            MovieListUIntent.InitialUIntent, MovieListUIntent.RetrySeeCharacterListUIntent -> MovieListAction.GetMovieListAction
             is MovieListUIntent.SeeDetailUIntent -> MovieListAction.GoToDetailAction(id)
         }
     }
