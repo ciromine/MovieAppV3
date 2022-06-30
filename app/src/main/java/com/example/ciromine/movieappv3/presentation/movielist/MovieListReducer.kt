@@ -2,46 +2,50 @@ package com.example.ciromine.movieappv3.presentation.movielist
 
 import com.example.ciromine.movieappv3.core.mvi.MviReducer
 import com.example.ciromine.movieappv3.core.mvi.UnsupportedReduceException
+import com.example.ciromine.movieappv3.presentation.movielist.MovieListResult.*
+import com.example.ciromine.movieappv3.presentation.movielist.MovieListResult.GetMovieListResult.*
+import com.example.ciromine.movieappv3.presentation.movielist.MovieListUiState.*
 import javax.inject.Inject
+import kotlin.Error
 
 class MovieListReducer @Inject constructor() :
     MviReducer<MovieListUiState, MovieListResult> {
 
     override fun MovieListUiState.reduce(result: MovieListResult): MovieListUiState {
         return when (val previousState = this) {
-            is MovieListUiState.DefaultUiState -> previousState reduce result
-            is MovieListUiState.LoadingUiState -> previousState reduce result
-            is MovieListUiState.SuccessUiState -> previousState reduce result
-            is MovieListUiState.ErrorUiState -> previousState reduce result
+            is DefaultUiState -> previousState reduce result
+            is LoadingUiState -> previousState reduce result
+            is SuccessUiState -> previousState reduce result
+            is ErrorUiState -> previousState reduce result
             else -> throw UnsupportedReduceException(this, result)
         }
     }
 
-    private infix fun MovieListUiState.DefaultUiState.reduce(result: MovieListResult): MovieListUiState {
+    private infix fun DefaultUiState.reduce(result: MovieListResult): MovieListUiState {
         return when (result) {
-            MovieListResult.GetMovieListResult.InProgress -> MovieListUiState.LoadingUiState
+            InProgress -> LoadingUiState
             else -> throw UnsupportedReduceException(this, result)
         }
     }
 
-    private infix fun MovieListUiState.LoadingUiState.reduce(result: MovieListResult): MovieListUiState {
+    private infix fun LoadingUiState.reduce(result: MovieListResult): MovieListUiState {
         return when (result) {
-            is MovieListResult.GetMovieListResult.Success -> MovieListUiState.SuccessUiState(result.results)
-            is Error -> MovieListUiState.ErrorUiState
+            is Success -> SuccessUiState(result.results)
+            is Error -> ErrorUiState
             else -> throw UnsupportedReduceException(this, result)
         }
     }
 
-    private infix fun MovieListUiState.SuccessUiState.reduce(result: MovieListResult): MovieListUiState {
+    private infix fun SuccessUiState.reduce(result: MovieListResult): MovieListUiState {
         return when (result) {
-            is MovieListResult.NavigateToResult.GoToDetail -> this
+            is NavigateToResult.GoToDetail -> this
             else -> throw UnsupportedReduceException(this, result)
         }
     }
 
-    private infix fun MovieListUiState.ErrorUiState.reduce(result: MovieListResult): MovieListUiState {
+    private infix fun ErrorUiState.reduce(result: MovieListResult): MovieListUiState {
         return when (result) {
-            MovieListResult.GetMovieListResult.InProgress -> MovieListUiState.LoadingUiState
+            InProgress -> LoadingUiState
             else -> throw UnsupportedReduceException(this, result)
         }
     }

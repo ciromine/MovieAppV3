@@ -7,6 +7,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -26,9 +27,7 @@ class GetMovieListUseCaseTest {
     fun `when calls 'execute', then return DomainMovieList`() = runBlocking {
         stubRepository(domainMovieList)
 
-        val flow = useCase.execute()
-
-        flow.collect { result ->
+        useCase.execute().collect {  result ->
             assertEquals(domainMovieList, result)
         }
 
