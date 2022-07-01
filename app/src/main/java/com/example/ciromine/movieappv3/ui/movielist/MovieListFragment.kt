@@ -59,11 +59,6 @@ class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
         return binding?.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupListener()
-    }
-
     private fun statesProcessIntents() {
         viewModel.run {
             viewModel.processUserIntents(userIntents())
@@ -72,10 +67,6 @@ class MovieListFragment : Fragment(), MviUi<MovieListUIntent, MovieListUiState>,
 
     private fun initialUserIntent(): Flow<MovieListUIntent> = flow {
         emit(InitialUIntent)
-    }
-
-    private fun setupListener() {
-        //binding?.btnRetry?.setOnClickListener { onRetryTapped() }
     }
 
     private fun setupCollectors() {
